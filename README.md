@@ -38,33 +38,29 @@ Support for automatially power cycling devices is included using this device: ht
 
 Run ```drseus.py --help``` for usage information
 
-Use arguments in files by prefixing with ```@```. For example, if you have a file conf/sample/p2020 with command line arguments, you can run
+Use arguments in files by prefixing with ```@```. For example, if you have a file conf/sample/p2020 with pre-defined command line arguments, you can run
 
 ```drseus.py @conf/sample/p2020``` 
 
 instead of specifying the arguments every time you run ```drseus.py```
 
-## Setup for Debian-based systems
+## Installation and Setup for Debian-based systems
 
-Before using DrSEUs for the first time, you must first run
+1) Run the install dependencies script
 
-```scripts/install_dependencies.sh``` 
+    ```./scripts/install_dependencies.sh```
 
-then
+    Be sure to select no when prompted to install simics unless you have a license.
 
-```scripts/setup_environment.sh```
+2) Run the setup environment script
 
-## Installation for Debian-based systems
+    ```./scripts/setup_environment```
 
-    * Run the install dependencies script
-        ./scripts/install_dependencies.sh
-        be sure to select no when prompted to install simics unless you have a license
-    * Run the setup environment script
-        ./scripts/setup_environment
-    * Setup tftp server
-        ./scripts/setup_tftp.sh
-    * Make sure you have a cross-compiler for your desired architecture
-        e.g. arm-linux-gnueabihf-gcc/g++
+3) Setup tftp server
+
+    ```./scripts/setup_tftp.sh```
+
+    Make sure you have a cross-compiler for your desired architecture e.g. ```arm-linux-gnueabihf-gcc``` or ```arm-linux-gnueabihf-g++```
 
 
 **Typical DrSEUs Examples:**
