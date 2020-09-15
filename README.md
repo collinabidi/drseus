@@ -29,7 +29,7 @@ Fault injection framework and application for performing **CPU** fault injection
 
 Support for automatially power cycling devices is included using this device: https://dlidirect.com/products/web-power-switch-7
 
-### DrSEUs Terminology:
+### DrSEUs Terminology
 
 * **Campaign**: contains gold execution (an ideal) run of target application without fault injections that is used for comparison with one or more iterations
 * **Iteration**: monitored execution run of target application with one or more injections
@@ -46,24 +46,24 @@ instead of specifying the arguments every time you run ```drseus.py```
 
 ## Installation and Setup for Debian-based systems
 
-1) Run the install dependencies script
+1) **Run the install dependencies script**
 
     ```./scripts/install_dependencies.sh```
 
     Be sure to select no when prompted to install simics unless you have a license.
 
-2) Run the setup environment script
+2) **Run the setup environment script**
 
     ```./scripts/setup_environment```
 
-3) Setup tftp server
+3) **Setup tftp server**
 
     ```./scripts/setup_tftp.sh```
 
     Make sure you have a cross-compiler for your desired architecture e.g. ```arm-linux-gnueabihf-gcc``` or ```arm-linux-gnueabihf-g++```
 
 
-**Typical DrSEUs Examples:**
+## Typical DrSEUs Examples
 
 ```drseus.py new ppc_fi_2d_conv_fft_omp -s -a "lena.bmp out.bmp" -f lena.bmp -o out.bmp```
 1) Creates a Simics fault-injection campaign
@@ -79,16 +79,16 @@ instead of specifying the arguments every time you run ```drseus.py```
 1) Starts log server at http://localhost:8000 in your web browser.
 2) Records and visualizes live data from any tests run from ```drseus.py``` while the server is active.
 
-**Adding support for new architectures**:
+## Adding support for new architectures
 
-* Create a new debugger that extends jtag class (use src/jtag/bdi.py or src/jtag/openocd.py as a guide)
-* Define injection targets as json file (use src/targets/a9.json or src/targets/p2020.json as a guide)
-    * Any modifications to the jtag.json or simics.json in src/targets/a9/ or src/targets/p2020/ requires running scripts/merge.py to regenerate src/targets/a9.json and src/targets/p2020.json as only these files are used by DrSEUs
+* Create a new debugger that extends jtag class (use *src/jtag/bdi.py* or *src/jtag/openocd.py* as a guide)
+* Define injection targets as json file (use *src/targets/a9.json* or *src/targets/p2020.json* as a guide)
+    * Any modifications to the *jtag.json* or *simics.json* in *src/targets/a9/* or *src/targets/p2020/* requires running ```scripts/merge.py``` to regenerate *src/targets/a9.json* and *src/targets/p2020.json* as only these files are used by DrSEUs
     * If architecture does not require Simics or jtag specific behavior (e.g. only adding jtag support), only the top level "targets" dictionary is required to be defined
-* Modify __init_\_() in src/fault_injectory.py to use your new debugger class
-* In order to automatically detect USB devices, find_devices() in src/jtag/__init_\_.py will need to be modified to detect the corresponding VENDOR_ID and MODEL_ID
-* In order for DrSEUs to automatically spawn child processes for injecting on multiple hardware devices in parallel (without invoking drseus.py for each device), support must be added to injection_campaign() in src/utilities.py
+* Modify ```__init__()``` in src/fault_injectory.py to use your new debugger class
+* In order to automatically detect USB devices, ```find_devices()``` in *src/jtag/__init_\_.py* will need to be modified to detect the corresponding VENDOR_ID and MODEL_ID
+* In order for DrSEUs to automatically spawn child processes for injecting on multiple hardware devices in parallel (without invoking ```drseus.py``` for each device), support must be added to injection_campaign() in *src/utilities.py*
 * Additional modifications for adding a new device to Simics:
-    * Modify __init_\_() in src/simics/__init_\_.py to use the new board's name for the new architecture
-    * Modify launch_simics() in src/simics/__init_\_.py to properly initialize the new device in Simics
+    * Modify ```__init__()``` in *src/simics/__init_\_.py* to use the new board's name for the new architecture
+    * Modify ``launch_simics()`` in *src/simics/__init_\_.py* to properly initialize the new device in Simics
 
